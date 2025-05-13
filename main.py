@@ -2,7 +2,6 @@ import customtkinter as ctk
 from PIL import Image
 import os
 import tkinter as tk
-import math 
 
 '''
 Цвет фона - #2B2B2B
@@ -36,14 +35,14 @@ class App(ctk.CTk):
 
         # Загрузить и создать фоновое изображение
         current_path = os.path.dirname(os.path.realpath(__file__))
-        background_image = ctk.CTkImage(Image.open(current_path + "/images/fon_3.jpg"),
+        background_image = ctk.CTkImage(Image.open(current_path + "\\images\\fon_3.jpg"),
                                 size = (self.winfo_screenwidth(), self.winfo_screenheight()))
         background_image_label = ctk.CTkLabel(self, image = background_image, text = '')
         background_image_label.grid(column = 0, row = 0)
 
         
         # Создание кнопки закрытия приложения
-        close_image_button = ctk.CTkImage(dark_image = Image.open(current_path + '/images/115.png'), size = (30, 30))
+        close_image_button = ctk.CTkImage(dark_image = Image.open(current_path + '\\images\\115.png'), size = (30, 30))
         
         close_button = ctk.CTkButton(self,
                                      image = close_image_button,
@@ -931,6 +930,15 @@ class main_frame(ctk.CTkFrame):
             if cordY_s != zero: result += f"Начальная точка (Y₀) = {cordY_s}\n"
                         
             if cordY != zero: result += f"Точка (Y) = {cordY}\n"
+            
+            
+            theory = {'nuton_two_boost': "\tВторой закон Ньютона \nСогласно второму закону Ньютона ускорение тела прямо пропорционально равнодействующей сил, "
+                                                           "\nприложенных к телу, и обратно пропорционально его массе. Из чего следует что a = F/m",
+                      'nuton_two_power': "\tВторой закон Ньютона \nСогласно второму закону Ньютона ускорение тела прямо пропорционально равнодействующей сил, "
+                                                           "\nприложенных к телу, и обратно пропорционально его массе. Из чего следует что F = m * a",
+                      'nuton_two_mass': "\tВторой закон Ньютона \nСогласно второму закону Ньютона ускорение тела прямо пропорционально равнодействующей сил, "
+                                                           "\nприложенных к телу, и обратно пропорционально его массе. Из чего следует что m = F / a "}
+            
                         
             self.result_label.configure(text = result)
                     
@@ -938,9 +946,7 @@ class main_frame(ctk.CTkFrame):
             result = "Недостаточно данных \nили данные некорректны"
             self.result_label.configure(text = result)
         
-        
-                
-                                    
+                                            
     def show_openMenu_Y(self):
         self.vertical_system_combobox.grid(column = 0, row = 0,
                                            padx = (0, 5), pady = 0,

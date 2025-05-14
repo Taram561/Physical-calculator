@@ -784,7 +784,7 @@ class main_frame(ctk.CTkFrame):
 
             kel = 0
             
-            
+            array_theory = []
             
             while kel != 64:    
                 kel += 1                                    
@@ -803,6 +803,7 @@ class main_frame(ctk.CTkFrame):
                             boost = (new_v ** 2 - old_v ** 2) / (distans * 2)
                         elif power != zero and mass != zero: 
                             boost = power / mass
+                            array_theory.append("nuton_two_boost")
                 
                     if boost == zero and coordinate_sys == 2: boost = 9.8  
                     
@@ -867,10 +868,12 @@ class main_frame(ctk.CTkFrame):
                 if check_power == "on":
                     if power == zero and boost != zero  and mass != zero: 
                         power = boost * mass
+                        array_theory.append("nuton_two_power")
                                                         
                 if check_mass == "on":
                     if mass == zero and boost != zero and power != zero: 
                         mass = power / boost
+                        array_theory.append("nuton_two_mass")
                                                 
                 if check_cordX_s == "on":
                     if cordX_s == zero:
@@ -894,53 +897,56 @@ class main_frame(ctk.CTkFrame):
                         if cordY_s != zero and new_v != zero and time != zero: cordY = cordY_s + new_v * time
                         elif cordY_s != zero and distans != zero: cordY = cordY_s + distans
                     
-                            
-            if boost != zero: 
-                boost = float(boost) / data_boost[boost_result]       
-                result += f"Ускорение (a) = {boost} {boost_result} \n"
+            if boost != zero and check_boost == "on": 
+                    boost = float(boost) / data_boost[boost_result]       
+                    result += f"Ускорение (a) = {boost} {boost_result} \n"
             
-            if old_v != zero:
-                old_v = float(old_v) * data_speed[old_speed_result]
-                result += f"Начальная скорость (v₀) = {old_v} {old_speed_result} \n"
+            if old_v != zero and check_old_speed == "on":
+                    old_v = float(old_v) * data_speed[old_speed_result]
+                    result += f"Начальная скорость (v₀) = {old_v} {old_speed_result} \n"
             
-            if new_v != zero:
-                new_v = float(new_v) * data_speed[new_speed_result]
-                result += f"Скорость (v) = {new_v} {new_speed_result} \n"
+            if new_v != zero and check_new_speed == "on":
+                    new_v = float(new_v) * data_speed[new_speed_result]
+                    result += f"Скорость (v) = {new_v} {new_speed_result} \n"
             
-            if time != zero:
-                time = float(time) / data_time[time_result]       
-                result += f"Время (t) = {time} {time_result} \n"
+            if time != zero and check_time == "on":
+                    time = float(time) / data_time[time_result]       
+                    result += f"Время (t) = {time} {time_result} \n"
             
-            if distans != zero:
-                distans = float(distans) * data_distans[dist_result]
-                result += f"Расстояние (S) = {stated}\n"
+            if distans != zero and check_dist == "on":
+                    distans = float(distans) * data_distans[dist_result]
+                    result += f"Расстояние (S) = {stated}\n"
             
-            if power != zero: 
-                power = float(power) * data_power[power_at_body_result]
-                result += f"Сила (F) = {power} {power_at_body_result} \n"
+            if power != zero and check_power == "on": 
+                    power = float(power) * data_power[power_at_body_result]
+                    result += f"Сила (F) = {power} {power_at_body_result} \n"
             
-            if mass != zero: 
-                mass = float(mass) / data_mass[mass_result]
-                result += f"Масса (m) = {mass} {mass_result} \n"
+            if mass != zero and check_mass == "on": 
+                    mass = float(mass) / data_mass[mass_result]
+                    result += f"Масса (m) = {mass} {mass_result} \n"
             
-            if cordX_s != zero:result += f"Начальная точка (X₀) = {cordX_s}\n"
+            if cordX_s != zero and check_cordX_s == "on":result += f"Начальная точка (X₀) = {cordX_s}\n"
             
-            if cordX != zero: result += f"Точка (X) = {cordX}\n"
+            if cordX != zero and check_cordX == "on": result += f"Точка (X) = {cordX}\n"
             
-            if cordY_s != zero: result += f"Начальная точка (Y₀) = {cordY_s}\n"
-                        
-            if cordY != zero: result += f"Точка (Y) = {cordY}\n"
+            if cordY_s != zero and check_cordY_s == "on": result += f"Начальная точка (Y₀) = {cordY_s}\n"
+            
+            if cordY != zero and check_cordY == "on": result += f"Точка (Y) = {cordY}\n"
             
             
-            theory = {'nuton_two_boost': "\tВторой закон Ньютона \nСогласно второму закону Ньютона ускорение тела прямо пропорционально равнодействующей сил, "
-                                                           "\nприложенных к телу, и обратно пропорционально его массе. Из чего следует что a = F/m",
-                      'nuton_two_power': "\tВторой закон Ньютона \nСогласно второму закону Ньютона ускорение тела прямо пропорционально равнодействующей сил, "
+            theory = {'nuton_two_boost': "\n\tВторой закон Ньютона \nСогласно второму закону Ньютона ускорение тела\n прямо пропорционально равнодействующей сил, "
+                                                           "\nприложенных к телу, и обратно пропорционально его массе. \nИз чего следует что a = F/m",
+                      'nuton_two_power': "\n\tВторой закон Ньютона \nСогласно второму закону Ньютона ускорение тела прямо пропорционально равнодействующей сил, "
                                                            "\nприложенных к телу, и обратно пропорционально его массе. Из чего следует что F = m * a",
-                      'nuton_two_mass': "\tВторой закон Ньютона \nСогласно второму закону Ньютона ускорение тела прямо пропорционально равнодействующей сил, "
+                      'nuton_two_mass': "\n\tВторой закон Ньютона \nСогласно второму закону Ньютона ускорение тела прямо пропорционально равнодействующей сил, "
                                                            "\nприложенных к телу, и обратно пропорционально его массе. Из чего следует что m = F / a "}
             
+            for k in array_theory:
+                result += theory[k]
                         
             self.result_label.configure(text = result)
+            
+            
                     
         except ValueError:
             result = "Недостаточно данных \nили данные некорректны"

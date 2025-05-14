@@ -785,6 +785,7 @@ class main_frame(ctk.CTkFrame):
             kel = 0
             
             array_theory = []
+            result_error = False
             
             while kel != 64:    
                 kel += 1                                    
@@ -803,11 +804,11 @@ class main_frame(ctk.CTkFrame):
                         boost = (new_v ** 2 - old_v ** 2) / (distans * 2)
                     elif power != zero and mass != zero: 
                         boost = power / mass
-                        array_theory.append("nuton_two_boost")
+                        if "nuton_two_boost" not in array_theory:
+                            array_theory.append("nuton_two_boost")
                 
                     if boost == zero and coordinate_sys == 2: boost = 9.8  
                     
-
                 if old_v == zero:
                     if distans != zero and time != zero  and boost != zero:
                         old_v = (float(time) * float(boost)) / (distans * 2)
@@ -839,8 +840,7 @@ class main_frame(ctk.CTkFrame):
                         time = (cordX - cordX_s) / new_v
                     elif cordY != zero and cordY_s != zero and new_v != zero: 
                         time = (cordY - cordY_s) / new_v
-                                                        
-                
+                                                                        
                 if distans == zero:
                     if old_v != zero and boost != zero and time != zero: 
                         distans = old_v * time + (boost * (time ** 2)) / 2
@@ -850,39 +850,36 @@ class main_frame(ctk.CTkFrame):
                     elif cordX != zero and cordX_s != zero: distans = cordX - cordX_s
                     elif cordY != zero and cordY_s != zero: distans = cordY - cordY_s    
                 
-
                 if power == zero: 
-                    if zero != boost and mass: 
+                    if zero != boost and zero != mass: 
                         power = boost * mass   
-                    elif zero != time and old_v and new_v and mass:
+                    elif zero != time and zero != old_v and zero != new_v and zero != mass:
                         power = ((new_v - old_v) * mass) / time
-                    array_theory.append("nuton_two_power")                                    
+                    if "nuton_two_mass" not in array_theory and power != zero:
+                        array_theory.append("nuton_two_power")                                    
                 
                 if mass == zero:
                     if boost != zero and power != zero: 
                         mass = power / boost
                     elif zero != time and old_v and new_v and power:
                         mass = power / ((new_v - old_v) / time)
-                    array_theory.append("nuton_two_mass")
-                                            
-                
+                    if "nuton_two_mass" not in array_theory and mass != zero: 
+                        array_theory.append("nuton_two_mass")
+                                                           
                 if cordX_s == zero:
                     if cordX != zero and new_v != zero and time != zero: cordX_s = cordX - new_v * time
                     elif cordX != zero and distans != zero: cordX_s = cordX - distans
-                        
-                
+                                      
                 if cordX == zero:
                     if cordX_s != zero and new_v != zero and time != zero: cordX = float(cordX_s) + new_v * time
                     elif cordX_s != zero and distans != zero: cordX = float(cordX_s) + distans
-                        
-                
+                                       
                 if cordY_s == zero:
                     if cordY != zero and new_v != zero and time != zero: 
                         cordY_s = cordY - new_v * time
                     elif cordY != zero and distans != zero:
                         cordY_s = cordY - distans
-                        
-                
+                                        
                 if cordY == zero:
                     if cordY_s != zero and new_v != zero and time != zero: cordY = cordY_s + new_v * time
                     elif cordY_s != zero and distans != zero: cordY = cordY_s + distans
@@ -890,19 +887,27 @@ class main_frame(ctk.CTkFrame):
             if boost != zero and check_boost == "on": 
                     boost = float(boost) / data_boost[boost_result]       
                     result += f"Ускорение (a) = {boost} {boost_result} \n"
-            
+            elif boost == zero and check_boost == "on":
+                result_error = True
+                
             if old_v != zero and check_old_speed == "on":
                     old_v = float(old_v) * data_speed[old_speed_result]
                     result += f"Начальная скорость (v₀) = {old_v} {old_speed_result} \n"
-            
+            elif old_v == zero and check_old_speed == "on":
+                result_error = True
+                
             if new_v != zero and check_new_speed == "on":
                     new_v = float(new_v) * data_speed[new_speed_result]
                     result += f"Скорость (v) = {new_v} {new_speed_result} \n"
-            
+            elif new_v == zero and check_new_speed == "on":
+                result_error = True
+                
             if time != zero and check_time == "on":
                     time = float(time) / data_time[time_result]       
                     result += f"Время (t) = {time} {time_result} \n"
-            
+            elif time == zero and check_time == "on":
+                result_error = True
+                
             if distans != zero and check_dist == "on":
                 stated = f"{distans} {dist_result}"   
                 if distans == 0: stated = f"неподвижно"
@@ -916,23 +921,32 @@ class main_frame(ctk.CTkFrame):
                     stated = f"тело поднялось на {distans} {dist_result} "
                 distans = float(distans) * data_distans[dist_result]
                 result += f"Расстояние (S) = {stated}\n"
-            
+            elif distans == zero and check_dist == "on":
+                result_error = True
+                
             if power != zero and check_power == "on": 
                     power = float(power) * data_power[power_at_body_result]
                     result += f"Сила (F) = {power} {power_at_body_result} \n"
-            
+            elif power == zero and check_power == "on":
+                result_error = True
+                
             if mass != zero and check_mass == "on": 
                     mass = float(mass) / data_mass[mass_result]
                     result += f"Масса (m) = {mass} {mass_result} \n"
-            
+            elif mass == zero and check_mass == "on":
+                result_error = True
+                
             if cordX_s != zero and check_cordX_s == "on":result += f"Начальная точка (X₀) = {cordX_s}\n"
+            elif cordX_s == zero and check_cordX_s == "on": result_error = True
             
             if cordX != zero and check_cordX == "on": result += f"Точка (X) = {cordX}\n"
-            
+            elif cordX == zero and check_cordX == "on":result_error = True
+           
             if cordY_s != zero and check_cordY_s == "on": result += f"Начальная точка (Y₀) = {cordY_s}\n"
+            elif cordY_s == zero and check_cordY_s == "on":result_error = True
             
             if cordY != zero and check_cordY == "on": result += f"Точка (Y) = {cordY}\n"
-            
+            elif cordY == zero and check_cordY == "on": result_error = True
             
             theory = {'nuton_two_boost': "\n\tВторой закон Ньютона \nСогласно второму закону Ньютона ускорение тела\n прямо пропорционально равнодействующей сил, "
                                                            "\nприложенных к телу, и обратно пропорционально его массе. \nИз чего следует что a = F/m",
@@ -943,7 +957,8 @@ class main_frame(ctk.CTkFrame):
             
             for k in array_theory:
                 result += theory[k]
-                        
+            if result_error: result = "Недостаточно данных \nили данные некорректны"  
+            result_error = False        
             self.result_label.configure(text = result)
             
             

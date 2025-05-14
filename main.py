@@ -883,6 +883,7 @@ class main_frame(ctk.CTkFrame):
                 if cordY == zero:
                     if cordY_s != zero and new_v != zero and time != zero: cordY = cordY_s + new_v * time
                     elif cordY_s != zero and distans != zero: cordY = cordY_s + distans
+           
                 
             if boost != zero and check_boost == "on": 
                     boost = float(boost) / data_boost[boost_result]       
@@ -961,8 +962,6 @@ class main_frame(ctk.CTkFrame):
             result_error = False        
             self.result_label.configure(text = result)
             
-            
-                    
         except ValueError:
             result = "Недостаточно данных \nили данные некорректны"
             self.result_label.configure(text = result)
@@ -1047,8 +1046,7 @@ class main_frame(ctk.CTkFrame):
         self.old_speed_data.grid(column = 0, row = 5,
                                  padx = (716, 0),
                                  sticky = "w")
-        
-            
+                    
     def boost_move_event(self):
         self.boost_label.grid_remove()
         self.boost_entry.grid_remove()

@@ -792,111 +792,101 @@ class main_frame(ctk.CTkFrame):
                 
                 self.result_label.configure(text = "")
                 
-                if check_boost == "on":
-                    if boost == zero:
-                        
-                        if time != zero and old_v != zero and new_v != zero: 
-                            boost = (new_v - old_v) / time      
-                        elif old_v != zero and new_v != zero  and distans != zero:
-                            boost = (2 * (distans - old_v * time)) / (time ** 2)
-                        elif old_v != zero and new_v != zero and distans != zero:
-                            boost = (new_v ** 2 - old_v ** 2) / (distans * 2)
-                        elif power != zero and mass != zero: 
-                            boost = power / mass
-                            array_theory.append("nuton_two_boost")
+                
+                if boost == zero:
+                    
+                    if time != zero and old_v != zero and new_v != zero: 
+                        boost = (new_v - old_v) / time      
+                    elif old_v != zero and new_v != zero  and distans != zero:
+                        boost = (2 * (distans - old_v * time)) / (time ** 2)
+                    elif old_v != zero and new_v != zero and distans != zero:
+                        boost = (new_v ** 2 - old_v ** 2) / (distans * 2)
+                    elif power != zero and mass != zero: 
+                        boost = power / mass
+                        array_theory.append("nuton_two_boost")
                 
                     if boost == zero and coordinate_sys == 2: boost = 9.8  
                     
-                if check_old_speed == "on":
-                    if old_v == zero:
-                        if distans != zero and time != zero  and boost != zero:
-                            old_v = (float(time) * float(boost)) / (distans * 2)
-                        elif new_v != zero  and boost != zero  and time != zero: 
-                            old_v = boost * time - new_v
-                        elif distans != zero  and boost != zero  and new_v != zero  != zero:
-                            old_v = (2 * distans * boost + (new_v ** 2)) ** 0.5
+
+                if old_v == zero:
+                    if distans != zero and time != zero  and boost != zero:
+                        old_v = (float(time) * float(boost)) / (distans * 2)
+                    elif new_v != zero  and boost != zero  and time != zero: 
+                        old_v = boost * time - new_v
+                    elif distans != zero  and boost != zero  and new_v != zero  != zero:
+                        old_v = (2 * distans * boost + (new_v ** 2)) ** 0.5
+                
+                if new_v == zero:
+                    if distans != zero and time != zero:
+                        new_v = distans / time
+                    elif old_v != zero and boost != zero and time != zero: 
+                        new_v = old_v + boost * time
+                    elif distans != zero and boost != zero and old_v != zero:
+                        new_v = (distans * 2 * boost + old_v ** 2) ** 0.5
+                    elif cordX != zero and cordX_s != zero and time != zero: 
+                        new_v = (cordX - cordX_s) / time
+                    elif cordY != zero and cordY_s != zero and time != zero: 
+                        new_v = (cordY - cordY_s) / time                   
                     
-                if check_new_speed == "on":
-                    if new_v == zero:
-                        if distans != zero and time != zero:
-                            new_v = distans / time
-                        elif old_v != zero and boost != zero and time != zero: 
-                            new_v = old_v + boost * time
-                        elif distans != zero and boost != zero and old_v != zero:
-                            new_v = (distans * 2 * boost + old_v ** 2) ** 0.5
-                        elif cordX != zero and cordX_s != zero and time != zero: 
-                            new_v = (cordX - cordX_s) / time
-                        elif cordY != zero and cordY_s != zero and time != zero: 
-                            new_v = (cordY - cordY_s) / time                   
-                        
-                if check_time == "on":
-                    if time == zero:
-                        if distans != zero and new_v != zero:
-                            time = distans / new_v
-                        elif boost != zero and old_v != zero and new_v != zero: 
-                            time = (new_v - old_v) / boost
-                        elif boost != zero and old_v != zero and distans != zero:
-                            time = (-old_v + (old_v ** 2 + 2 * boost * distans) ** 0.5) / boost
-                        elif cordX != zero and cordX_s != zero and new_v != zero: 
-                            time = (cordX - cordX_s) / new_v
-                        elif cordY != zero and cordY_s != zero and new_v != zero: 
-                            time = (cordY - cordY_s) / new_v
-                                                            
-                if check_dist == "on":
-                    if distans == zero:
-                        if old_v != zero and boost != zero and time != zero: 
-                            distans = old_v * time + (boost * (time ** 2)) / 2
-                        elif new_v != zero and boost != zero and old_v != zero: 
-                            distans = (new_v ** 2 - old_v ** 2) / (2 * boost)
-                        elif new_v != zero and time != zero: distans = new_v * time
-                        elif cordX != zero and cordX_s != zero: distans = cordX - cordX_s
-                        elif cordY != zero and cordY_s != zero: distans = cordY - cordY_s
+                if time == zero:
+                    if distans != zero and new_v != zero:
+                        time = distans / new_v
+                    elif boost != zero and old_v != zero and new_v != zero: 
+                        time = (new_v - old_v) / boost
+                    elif boost != zero and old_v != zero and distans != zero:
+                        time = (-old_v + (old_v ** 2 + 2 * boost * distans) ** 0.5) / boost
+                    elif cordX != zero and cordX_s != zero and new_v != zero: 
+                        time = (cordX - cordX_s) / new_v
+                    elif cordY != zero and cordY_s != zero and new_v != zero: 
+                        time = (cordY - cordY_s) / new_v
+                                                        
+                
+                if distans == zero:
+                    if old_v != zero and boost != zero and time != zero: 
+                        distans = old_v * time + (boost * (time ** 2)) / 2
+                    elif new_v != zero and boost != zero and old_v != zero: 
+                        distans = (new_v ** 2 - old_v ** 2) / (2 * boost)
+                    elif new_v != zero and time != zero: distans = new_v * time
+                    elif cordX != zero and cordX_s != zero: distans = cordX - cordX_s
+                    elif cordY != zero and cordY_s != zero: distans = cordY - cordY_s    
+                
+
+                if power == zero: 
+                    if zero != boost and mass: 
+                        power = boost * mass   
+                    elif zero != time and old_v and new_v and mass:
+                        power = ((new_v - old_v) * mass) / time
+                    array_theory.append("nuton_two_power")                                    
+                
+                if mass == zero:
+                    if boost != zero and power != zero: 
+                        mass = power / boost
+                    elif zero != time and old_v and new_v and power:
+                        mass = power / ((new_v - old_v) / time)
+                    array_theory.append("nuton_two_mass")
+                                            
+                
+                if cordX_s == zero:
+                    if cordX != zero and new_v != zero and time != zero: cordX_s = cordX - new_v * time
+                    elif cordX != zero and distans != zero: cordX_s = cordX - distans
                         
                 
-                    
-                    stated = f"{distans} {dist_result}"
-                    if distans == 0: stated = f"неподвижно"
-                    elif distans > 0 and coordinate_sys == 2 and height_go == "вверх": stated = f"тело поднялось на {distans} {dist_result} "
-                    elif distans > 0 and coordinate_sys == 2 and height_go == "вниз": stated = f"тело опустилось на {distans} {dist_result} "
-                    elif distans < 0 and coordinate_sys == 2 and height_go == "вверх":
-                        distans *= -1
-                        stated = f"тело опустилось на {distans} {dist_result} "
-                    elif distans < 0 and coordinate_sys == 2 and height_go == "вниз":
-                        distans *= -1
-                        stated = f"тело поднялось на {distans} {dist_result} "
-                    
-                if check_power == "on":
-                    if power == zero and boost != zero  and mass != zero: 
-                        power = boost * mass
-                        array_theory.append("nuton_two_power")
-                                                        
-                if check_mass == "on":
-                    if mass == zero and boost != zero and power != zero: 
-                        mass = power / boost
-                        array_theory.append("nuton_two_mass")
-                                                
-                if check_cordX_s == "on":
-                    if cordX_s == zero:
-                        if cordX != zero and new_v != zero and time != zero: cordX_s = cordX - new_v * time
-                        elif cordX != zero and distans != zero: cordX_s = cordX - distans
-                            
-                if check_cordX == "on":
-                    if cordX == zero:
-                        if cordX_s != zero and new_v != zero and time != zero: cordX = float(cordX_s) + new_v * time
-                        elif cordX_s != zero and distans != zero: cordX = float(cordX_s) + distans
-                            
-                if check_cordY_s == "on":
-                    if cordY_s == zero:
-                        if cordY != zero and new_v != zero and time != zero: 
-                            cordY_s = cordY - new_v * time
-                        elif cordY != zero and distans != zero:
-                            cordY_s = cordY - distans
-                            
-                if check_cordY == "on":
-                    if cordY == zero:
-                        if cordY_s != zero and new_v != zero and time != zero: cordY = cordY_s + new_v * time
-                        elif cordY_s != zero and distans != zero: cordY = cordY_s + distans
-                    
+                if cordX == zero:
+                    if cordX_s != zero and new_v != zero and time != zero: cordX = float(cordX_s) + new_v * time
+                    elif cordX_s != zero and distans != zero: cordX = float(cordX_s) + distans
+                        
+                
+                if cordY_s == zero:
+                    if cordY != zero and new_v != zero and time != zero: 
+                        cordY_s = cordY - new_v * time
+                    elif cordY != zero and distans != zero:
+                        cordY_s = cordY - distans
+                        
+                
+                if cordY == zero:
+                    if cordY_s != zero and new_v != zero and time != zero: cordY = cordY_s + new_v * time
+                    elif cordY_s != zero and distans != zero: cordY = cordY_s + distans
+                
             if boost != zero and check_boost == "on": 
                     boost = float(boost) / data_boost[boost_result]       
                     result += f"Ускорение (a) = {boost} {boost_result} \n"
@@ -914,8 +904,18 @@ class main_frame(ctk.CTkFrame):
                     result += f"Время (t) = {time} {time_result} \n"
             
             if distans != zero and check_dist == "on":
-                    distans = float(distans) * data_distans[dist_result]
-                    result += f"Расстояние (S) = {stated}\n"
+                stated = f"{distans} {dist_result}"   
+                if distans == 0: stated = f"неподвижно"
+                elif distans > 0 and coordinate_sys == 2 and height_go == "вверх": stated = f"тело поднялось на {distans} {dist_result} "
+                elif distans > 0 and coordinate_sys == 2 and height_go == "вниз": stated = f"тело опустилось на {distans} {dist_result} "
+                elif distans < 0 and coordinate_sys == 2 and height_go == "вверх":
+                    distans *= -1
+                    stated = f"тело опустилось на {distans} {dist_result} "
+                elif distans < 0 and coordinate_sys == 2 and height_go == "вниз":
+                    distans *= -1
+                    stated = f"тело поднялось на {distans} {dist_result} "
+                distans = float(distans) * data_distans[dist_result]
+                result += f"Расстояние (S) = {stated}\n"
             
             if power != zero and check_power == "on": 
                     power = float(power) * data_power[power_at_body_result]
